@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <!-- Bootstrap, style and JQuery -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% if measures %}
+	<title>EMOUSIC - Analysis</title>
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+          integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous"/>
+    <!-- MIDI player -->
+    <link rel="stylesheet" href="{% static 'midiplayer.css' %}">
+	{% else %}
+	<title>EMOUSIC - Home</title>
+    {% endif %}
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" id="title_navbar">
+    <a class="navbar-brand col-6 col-sm-5 col-md-4 col-lg-3 mr-0 header_title" href="{% url 'emousic:index' %}">
+        <img src="{% static 'logow.png' %}" class="img-fluid my-3" alt="Responsive image">
+        <!--&&nbsp&nbspemousic&nbsp&nbsp-->
+    </a>
+</nav>
+<div class="container-fluid">
+    <div class="row" id="main_row">
+        <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>
+						<a data-toggle="collapse" href="#about_emousic"><i class="material-icons text-dark pr-1">music_note</i>EMOUSIC</a>
+					</span>
+                </h6>
+                <ul class="nav flex-column mb-2 collapse" id="about_emousic">
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            EMOUSIC is a particular sentiment analysis and opinion mining application.<br>
+							Indeed, when we think about sentiment analysis and opinion mining, we refer to the talent of understanding emotions,
+                            moods and viewpoints from textual information that we can find over the Internet, e.g. looking at the social media.
+							With EMOUSIC, instead, our effort is trying to “read the music” and infer the same kind of information not from a song’s text,
+                            but only using the song’s track.
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>
+						<a data-toggle="collapse" href="#about_approaches"><i class="material-icons text-dark pr-1">info</i>Approaches</a>
+					</span>
+                </h6>
+                <ul class="nav flex-column mb-2 collapse" id="about_approaches">
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            Arithmetic mean<br>
+                            The result sentics values are obtained, for each affective dimension, as the arithmetic mean of all the sentics values.
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            Weighted mean<br>
+                            The result sentics values are obtained, for each affective dimension, as the arithmetic mean of only the non-zero sentics values.
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            Majority<br>
+                            The sentics values of the two most frequent emotions are retrieved and the wighted mean is computed.
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>
+						<a data-toggle="collapse" href="#about_us"><i class="material-icons text-dark pr-1">group</i>About us</a>
+					</span>
+                </h6>
+                <ul class="nav flex-column mb-2 collapse" id="about_us">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            We are Gennaro, Angela, Luca, Arturo and Claudio, in brief <span class="text-primary">GALAC</span>,
+                            a team of friends and computer engineering students from the University of Salerno.
+							<div>
+							<p class="pt-3 py-1"><img src="{% static 'images/Gennaro.jpg' %}" alt="Gennaro Gemito" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">G</span>ennaro Gemito</p>
+							<p class="py-1"><img src="{% static 'images/Angela.jpg' %}" alt="Angela Addesso" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">A</span>ngela Addesso</p>
+							<p class="py-1"><img src="{% static 'images/Luca.jpg' %}" alt="Luca Sivoccia" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">L</span>uca Sivoccia</p>
+							<p class="py-1"><img src="{% static 'images/Arturo.jpg' %}" alt="Arturo Senatore" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">A</span>rturo Senatore</p>
+							<p class="py-1"><img src="{% static 'images/Claudio.jpg' %}" alt="Claudio Ciavola" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">C</span>laudio Ciavola</p>
+							</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-8 ml-sm-auto col-lg-9 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3
+            border-bottom">
+                <div class="form-view w-100">
+                    <form method="POST" action="{% url 'emousic:index' %}" enctype="multipart/form-data"
+                          class="row d-flex justify-content-left"
+                          name="form_load" id="form_load">{% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <table class="table table-hover col-8">
+                            <tr>
+                                {{ form.file.errors }}
+                                <th><label for="{{ form.file.id_for_label }}">File:</label></th>
+                                <td class="px-3">{{ form.file }}</td>
+                            </tr>
+                            <tr>
+                                {{ form.approach.errors }}
+                                <th><label for="{{ form.approach.id_for_label }}">Approach:</label></th>
+                                <td>
+                                    {% for c in form.approach %}
+                                    <!--p class="p-0 m-0">{{ c }}</--p-->
+                                    <span class="px-3">{{ c }}</span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="d-flex flex-fill justify-content-center my-auto">
+                            <button type="submit" class="btn btn-dark btn-outline" id="start_analysis">Start Analysis
+                            </button>
+                            <button class="btn btn-dark btn-outline" id="loading_analysis">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% if measures %}
+            <div class="row" id="midi_player">
+
+                <div class="col-4 text-center my-auto">
+                    <p class="lead"><span data-toggle="tooltip" data-placement="top"
+                                          title="Filename">{{ track_name }}</span></p>
+                </div>
+                <div class="col my-auto">
+                    <!--a href="javascript:startPlaying();">Click to play!</a-->
+                    <div class="bg-dark text-light rounded align-self-center" id="player">
+                        <div class="align-self-center" id="midiPlayer_div">
+                            <div id="midiPlayer_playingTime">0:00</div>
+                            <div id="midiPlayer_bar" class="bg-light">
+                                <div id="midiPlayer_progress" class="bg-primary"></div>
+                            </div>
+                            <div id="midiPlayer_totalTime">0:00</div>
+                            <button type="button" class="icon play btn btn-light mx-1" id="midiPlayer_play" onclick="javascript:startPlaying();">
+                                <i class="material-icons text-dark">play_arrow</i>
+                            </button>
+                            <button type="button" class="icon pause btn btn-light mx-1" id="midiPlayer_pause" onclick="pause()">
+                                <i class="material-icons text-dark">pause</i>
+                            </button>
+                            <button type="button" class="icon stop btn btn-light mx-1" id="midiPlayer_stop" onclick="stop()">
+                                <i class="material-icons text-dark">stop</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4 text-center my-auto">
+                    <label class="lead" for="amount">Measures range:</label>
+                    <label class="text-primary" id="amount"></label>
+                </div>
+                <div class="col text-center my-auto">
+                    <div id="slider-range"></div>
+                </div>
+            </div>
+            <div class="text-center">
+                <table class="table table-hover text-centered">
+                    <tr>
+                        <th>Pleasantness</th>
+                        <th>Attention</th>
+                        <th>Sensitivity</th>
+                        <th>Aptitude</th>
+                        <th>Moodtags</th>
+                        <th>Polarity</th>
+                    </tr>
+                    <tr>
+                        <td class="align-middle" id="table_pleasantness"></td>
+                        <td class="align-middle" id="table_attention"></td>
+                        <td class="align-middle" id="table_sensitivity"></td>
+                        <td class="align-middle" id="table_aptitude"></td>
+                        <td class="align-middle"><span id="table_moodtag_1"></span><br><span
+                                id="table_moodtag_2"></span></td>
+                        <!--td id="table_moodtag_2"></td-->
+                        <td class="align-middle" id="table_polarity"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="button_chart row p-5 d-flex justify-content-center">
+                <div class="chart col-sm-10">
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="col-sm-2 my-auto" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary btn-block" id="Pleasantness">Pleasantness</button>
+                    <button type="button" class="btn btn-success btn-block" id="Attention">Attention</button>
+                    <button type="button" class="btn btn-info btn-block" id="Sensitivity">Sensitivity</button>
+                    <button type="button" class="btn btn-warning btn-block" id="Aptitude">Aptitude</button>
+                    <button type="button" class="btn btn-danger btn-block" id="Polarity_value">Polarity Value
+                    </button>
+                </div>
+
+
+            </div>
+
+            <script>
+                    var measures = {{ measures|safe }};
+                    var measure_data = {{ measure_list|safe }};
+                    var song = "{{ song|safe }}";
+
+            </script>
+
+            <form action="{% url 'emousic:rdf' %}" name="form_rdf" method="POST" enctype="multipart/form-data"
+                  class="row d-flex justify-content-center py-3">
+                {% csrf_token %}
+                <input type="hidden" id="min_measure" name="min_measure" value="">
+                <input type="hidden" id="max_measure" name="max_measure" value="">
+                <input type="hidden" id="checked_approach" name="checked_approach" value="">
+                <input type="hidden" id="track_id" name="track_id" value="{{ track_id }}">
+                <button type="submit" class="btn btn-dark btn-outline">Generate RDF</button>
+            </form>
+
+            <script type="text/javascript" src="{% static 'slider.js' %}"></script>
+            <script type="text/javascript" src="{% static 'data_chart.js' %}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                    integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
+                    crossorigin="anonymous"></script>
+            <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js"
+                    data-cf-settings="da375c8833b8ed7a93ffbbaf-|49" defer=""></script>
+            <script type="text/javascript" src="http://rism-ch.org/midi-player/wildwebmidi.js"></script>
+            <script type="text/javascript" src="{% static 'midiplayer.js' %}"></script>
+            <script type="text/javascript" src="{% static 'midi_player.js' %}"></script>
+            {% endif %}
+        </main>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<!-- Script -->
+<script type="text/javascript" src="{% static 'index.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'index.js' %}"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>EMOUSIC - RDF</title>
+	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+</head>
+<body>
+
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" id="title_navbar">
+    <a class="navbar-brand col-6 col-sm-5 col-md-4 col-lg-3 mr-0 header_title" href="{% url 'emousic:index' %}">
+        <img src="{% static 'logow.png' %}" class="img-fluid" alt="Responsive image">
+        <!--&&nbsp&nbspemousic&nbsp&nbsp-->
+    </a>
+</nav>
+<div class="container-fluid">
+    <div class="row" id="main_row">
+        <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>
+						<a data-toggle="collapse" href="#about_emousic"><i class="material-icons text-dark pr-1">music_note</i>EMOUSIC</a>
+					</span>
+                </h6>
+                <ul class="nav flex-column mb-2 collapse" id="about_emousic">
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            EMOUSIC is a particular sentiment analysis and opinion mining application.<br>
+							Indeed, when we think about sentiment analysis and opinion mining, we refer to the talent of understanding emotions,
+                            moods and viewpoints from textual information that we can find over the Internet, e.g. looking at the social media.
+							With EMOUSIC, instead, our effort is trying to “read the music” and infer the same kind of information not from a song’s text,
+                            but only using the song’s track.
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>
+						<a data-toggle="collapse" href="#about_approaches"><i class="material-icons text-dark pr-1">info</i>Approaches</a>
+					</span>
+                </h6>
+                <ul class="nav flex-column mb-2 collapse" id="about_approaches">
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            Arithmetic mean<br>
+                            The result sentics values are obtained, for each affective dimension, as the arithmetic mean of all the sentics values.
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            Weighted mean<br>
+                            The result sentics values are obtained, for each affective dimension, as the arithmetic mean of only the non-zero sentics values.
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-justify">
+                            Majority<br>
+                            The sentics values of the two most frequent emotions are retrieved and the wighted mean is computed.
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>
+						<a data-toggle="collapse" href="#about_us"><i class="material-icons text-dark pr-1">group</i>About us</a>
+					</span>
+                </h6>
+                <ul class="nav flex-column mb-2 collapse" id="about_us">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            We are Gennaro, Angela, Luca, Arturo and Claudio, in brief <span class="text-primary">GALAC</span>,
+                            a team of friends and computer engineering students from the University of Salerno.
+							<div>
+							<p class="pt-3 py-1"><img src="{% static 'images/Gennaro.jpg' %}" alt="Gennaro Gemito" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">G</span>ennaro Gemito</p>
+							<p class="py-1"><img src="{% static 'images/Angela.jpg' %}" alt="Angela Addesso" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">A</span>ngela Addesso</p>
+							<p class="py-1"><img src="{% static 'images/Luca.jpg' %}" alt="Luca Sivoccia" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">L</span>uca Sivoccia</p>
+							<p class="py-1"><img src="{% static 'images/Arturo.jpg' %}" alt="Arturo Senatore" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">A</span>rturo Senatore</p>
+							<p class="py-1"><img src="{% static 'images/Claudio.jpg' %}" alt="Claudio Ciavola" class="w-25 rounded-circle"> <span class="font-weight-bold lead text-primary">C</span>laudio Ciavola</p>
+							</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-8 ml-sm-auto col-lg-9 px-4">
+            <pre>{{ rdf }}</pre>
+            <div class="row d-flex justify-content-center py-3">
+                {% with '/rdf/'|add:xml as path %}
+                <a type="button" class="btn btn-dark text-light" href="{% static path %}" download>Download</a>
+                {% endwith %}
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
