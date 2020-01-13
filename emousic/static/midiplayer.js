@@ -30,12 +30,14 @@ CircularAudioBuffer.prototype.filledBuffers = function () {
 
 // returns whether buffers are all filled
 CircularAudioBuffer.prototype.full = function () {
+    //console.debug(this.filledBuffers());
     return this.filledBuffers() >= this.slots - 1;
 }
 
 // returns a reference to next available buffer to be filled
 CircularAudioBuffer.prototype.prepare = function () {
     if (this.full()) {
+        //console.log('buffers full!!')
         return
     }
     var buffer = this.buffers[this.filled++];
@@ -124,6 +126,7 @@ function updateProgress(current, total) {
     }
     if (millisec > midiPlayer_lastMillisec) {
         if (midiPlayer_onUpdate != null) midiPlayer_onUpdate(millisec * midiPlayer_updateRate);
+        //console.log(millisec * UPDATE_RATE);
     }
     midiPlayer_lastMillisec = millisec;
 }
@@ -369,7 +372,6 @@ function runConversion() {
         $.fn.midiPlayer.stop = function () {
             stop();
         };
-
 
         $("#midiPlayer_bar").width(parseInt($("#midiPlayer_div").width()) - 225);
         $("#midiPlayer_progress").css("background", options.color);
