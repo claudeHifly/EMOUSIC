@@ -1,15 +1,13 @@
 from .average_criteria_with_zero import *
 
-def compute_result_with_zero(final_list):
 
+def compute_result_with_zero(final_list):
     sentics_track = {}
     sentics_track['pleasantness'] = [0, 0]
     sentics_track['attention'] = [0, 0]
     sentics_track['sensitivity'] = [0, 0]
     sentics_track['aptitude'] = [0, 0]
-
     occurrencies = len(final_list)
-
     for e in final_list:
         sentics_track['pleasantness'][0] += e.pleasantness
         sentics_track['attention'][0] += e.attention
@@ -37,9 +35,3 @@ def compute_result_with_zero(final_list):
                      round(sentics_track['polarity'], 3))
 
     return final_sentics
-
-    
-
-
-
-

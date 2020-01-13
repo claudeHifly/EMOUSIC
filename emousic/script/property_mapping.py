@@ -1,4 +1,4 @@
-HARM_PERC = 66.67 # HARM_PERC = 50
+HARM_PERC = 66.67  # HARM_PERC = 50
 LOUD_TRESH_MAX = 69  # LOUD_TRESH_MAX = 63
 LOUD_TRESH_MIN = 57  # LOUD_TRESH_MIN = 63
 VAR_LOUD_TRESH_MAX = 69  # VAR_LOUD_TRESH_MAX = 63
@@ -28,16 +28,12 @@ def create_map(property_dict):
     feature_map['timbre'] = ""
 
     # controllo su AMPL da implementare
-    # implementare a tutte le perc il controllo sulla divisione per zero
-    # if (property_dict["staccato"] / (property_dict["staccato"] + property_dict["legato"])) * 100 >= ARTI_PERC:
-    #     feature_map["articulation"] = "staccato"
-    # elif (property_dict["legato"] / (property_dict["staccato"] + property_dict["legato"])) * 100 >= ARTI_PERC:
-    #     feature_map["articulation"] = "legato"
 
     try:
         if (property_dict["consonant"] / (property_dict["consonant"] + property_dict["dissonant"])) * 100 >= HARM_PERC:
             feature_map["harmony"] = "consonant"
-        elif (property_dict["dissonant"] / (property_dict["consonant"] + property_dict["dissonant"])) * 100 >= HARM_PERC:
+        elif (property_dict["dissonant"] / (
+                property_dict["consonant"] + property_dict["dissonant"])) * 100 >= HARM_PERC:
             feature_map["harmony"] = "dissonant"
     except ZeroDivisionError:
         pass

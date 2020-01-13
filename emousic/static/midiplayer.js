@@ -30,25 +30,23 @@ CircularAudioBuffer.prototype.filledBuffers = function () {
 
 // returns whether buffers are all filled
 CircularAudioBuffer.prototype.full = function () {
-    //console.debug(this.filledBuffers());
     return this.filledBuffers() >= this.slots - 1;
 }
 
 // returns a reference to next available buffer to be filled
 CircularAudioBuffer.prototype.prepare = function () {
     if (this.full()) {
-        //console.log('buffers full!!')
         return
     }
-    var buffer = this.buffers[ this.filled++];
+    var buffer = this.buffers[this.filled++];
     this.filled %= this.slots;
     return buffer;
 }
 
 // returns the next buffer in the queue
 CircularAudioBuffer.prototype.use = function () {
-    if (! this.filledBuffers()) return;
-    var buffer = this.buffers[ this.used++];
+    if (!this.filledBuffers()) return;
+    var buffer = this.buffers[this.used++];
     this.used %= this.slots;
     return buffer;
 }
@@ -89,7 +87,7 @@ function startAudio() {
 function pauseAudio() {
     circularBuffer.reset();
     scriptNode.disconnect();
-	console.debug("pauseAudio");
+    console.debug("pauseAudio");
 }
 
 
@@ -126,7 +124,6 @@ function updateProgress(current, total) {
     }
     if (millisec > midiPlayer_lastMillisec) {
         if (midiPlayer_onUpdate != null) midiPlayer_onUpdate(millisec * midiPlayer_updateRate);
-        //console.log(millisec * UPDATE_RATE);
     }
     midiPlayer_lastMillisec = millisec;
 }
@@ -175,12 +172,12 @@ var midiPlayer_onUpdate = null;
 var MidiPlayer = {
     noInitialRun: true,
     totalDependencies: 1,
-    monitorRunDependencies: function(left) {
+    monitorRunDependencies: function (left) {
         //console.log(this.totalDependencies);
         //console.log(left);
         if ((left == 0) && !midiPlayer_isLoaded) {
-          console.log("MidiPlayer is loaded");
-          midiPlayer_isLoaded = true;
+            console.log("MidiPlayer is loaded");
+            midiPlayer_isLoaded = true;
         }
     }
 };
@@ -225,7 +222,7 @@ function samplesToTime(at) {
     var in_s = Math.floor(at / SAMPLE_RATE);
     var s = in_s % 60;
     var min = in_s / 60 | 0;
-    return min + ':' + (s === 0 ? '00': s < 10 ? '0' + s: s);
+    return min + ':' + (s === 0 ? '00' : s < 10 ? '0' + s : s);
 }
 
 function convertDataURIToBinary(dataURI) {
@@ -265,8 +262,8 @@ function play() {
         return;
     }
     if (!midiPlayer_isAudioInit) {
-          initAudio();
-          midiPlayer_isAudioInit = true;
+        initAudio();
+        midiPlayer_isAudioInit = true;
     }
 
     _EM_seekSamples = midiPlayer_currentSamples;
@@ -311,7 +308,7 @@ function runConversion() {
     console.log(midiPlayer_convertionJob);
 
     MidiPlayer.ccall('wildwebmidi',
-        null,[ 'string', 'string', 'number'],[midiPlayer_convertionJob.sourceMidi, midiPlayer_convertionJob.targetPath, sleep], {
+        null, ['string', 'string', 'number'], [midiPlayer_convertionJob.sourceMidi, midiPlayer_convertionJob.targetPath, sleep], {
             async: true
         });
 }
@@ -325,15 +322,15 @@ function runConversion() {
     $.fn.midiPlayer = function (options) {
 
         var options = $.extend({
-            // These are the defaults.
-            color: "#556b2f",
-            backgroundColor: "white",
-            width: parseInt($("#midiPlayer_div").width())-225,
-            onStop: null,
-            onUpdate: null,
-            updateRate: 50,
-        },
-        options);
+                // These are the defaults.
+                color: "#556b2f",
+                backgroundColor: "white",
+                width: parseInt($("#midiPlayer_div").width()) - 225,
+                onStop: null,
+                onUpdate: null,
+                updateRate: 50,
+            },
+            options);
         // width should not be less than 150
 
         // update rate should not be less than 10 milliseconds
@@ -343,8 +340,7 @@ function runConversion() {
             if (midiPlayer_isLoaded == false) {
                 console.log("Not loaded");
                 midiPlayer_input = song;
-            }
-            else {
+            } else {
                 console.log("Loaded");
                 var byteArray = convertDataURIToBinary(song);
                 if (midiPlayer_totalSamples > 0) {
@@ -352,9 +348,10 @@ function runConversion() {
                     console.log("Total samples +");
                     // stop();
                     // a timeout is necessary because otherwise writing to the disk is not done
-                    setTimeout(function() {convertFile("player.midi", byteArray);}, 200);
-                }
-                else {
+                    setTimeout(function () {
+                        convertFile("player.midi", byteArray);
+                    }, 200);
+                } else {
                     // When song is to start or is over
                     console.log("Total samples 0");
                     convertFile("player.midi", byteArray);
@@ -373,16 +370,8 @@ function runConversion() {
             stop();
         };
 
-        // Create the player
-//        this.append("<div id=\"midiPlayer_div\"></div>");
-//        $("#midiPlayer_div").append("<div id=\"midiPlayer_playingTime\">0:00</div>")
-//            .append("<div id=\"midiPlayer_bar\" class=\"bg-light\"><div id=\"midiPlayer_progress\" class=\"bg-primary\"></div></div>")
-//            .append("<div id=\"midiPlayer_totalTime\">0:00</div>")
-//            .append("<a class=\"icon play\" id=\"midiPlayer_play\" onclick=\"play()\"></a>")
-//            .append("<a class=\"icon pause\" id=\"midiPlayer_pause\" onclick=\"pause()\" disabled></a>")
-//            .append("<a class=\"icon stop\" id=\"midiPlayer_stop\" onclick=\"stop()\" disabled></a>");
 
-        $("#midiPlayer_bar").width(parseInt($("#midiPlayer_div").width())-225);
+        $("#midiPlayer_bar").width(parseInt($("#midiPlayer_div").width()) - 225);
         $("#midiPlayer_progress").css("background", options.color);
 
         // Assign the global variables
@@ -421,7 +410,7 @@ function runConversion() {
         });
 
         function updateDragging(pageX) {
-            var posX =  barDragStart + (pageX - pageDragStart);
+            var posX = barDragStart + (pageX - pageDragStart);
             if (posX >= 0 && posX <= parseInt($("#midiPlayer_bar").width())) {
                 var percent = posX / parseInt($("#midiPlayer_bar").width());
                 midiPlayer_currentSamples = percent * midiPlayer_totalSamples | 0;

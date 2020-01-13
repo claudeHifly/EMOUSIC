@@ -161,9 +161,6 @@ $('#slider-range').on('slidestop', function () {
         update_graph(config, labels_chart, Polarity_value_data, "Polarity Value", window.chartColors.colPolarityValue);
     }
 
-
-    //config.data.datasets.splice(0, 1);
-    //window.myLine.update()
 });
 
 

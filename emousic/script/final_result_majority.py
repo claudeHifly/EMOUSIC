@@ -18,8 +18,6 @@ def compute_result_majority(final_list):
         except:
             majority_dict[emotion2] = 1
 
-    #print(majority_dict)
-
     sentics_track = compute_emotion_majority(majority_dict)
 
     final_sentics = (round(sentics_track['pleasantness'][0], 3),

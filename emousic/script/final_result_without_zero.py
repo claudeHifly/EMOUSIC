@@ -1,7 +1,7 @@
 from .average_criteria import *
 
-def compute_result_without_zero(final_list):
 
+def compute_result_without_zero(final_list):
     sentics_track = {}
     sentics_track['pleasantness'] = [0, 0]
     sentics_track['attention'] = [0, 0]

@@ -4,42 +4,42 @@
 }
 
 h2 {
-	padding: 0.2em 0em 0.2em 0.5em;
+    padding: 0.2em 0em 0.2em 0.5em;
 }
 
 p {
-	padding: 0.5em;
+    padding: 0.5em;
 }
 
 .header {
-	background-color: black;
-	color: white;
-	padding: 0.5em 0em 0em 1em;
+    background-color: black;
+    color: white;
+    padding: 0.5em 0em 0em 1em;
 }
 
 .header_title {
     font-family: 'Musicografi';
-	font-size: 4em;
+    font-size: 4em;
 }
 
 .btn {
-	width: 100%;
-	max-width: 10em;
-	padding: 0.5em;
-}
-
-.date_filter_form, .format-form, .btn-group, .chart{
+    width: 100%;
+    max-width: 10em;
     padding: 0.5em;
 }
 
-.btn-export{
+.date_filter_form, .format-form, .btn-group, .chart {
+    padding: 0.5em;
+}
+
+.btn-export {
     width: 100em;
 }
 
-#amount{
-    border:0;
-    color:#f6931f;
-    font-weight:bold;
+#amount {
+    border: 0;
+    color: #f6931f;
+    font-weight: bold;
 }
 
 .table {
@@ -48,7 +48,7 @@ p {
 
 .material-icons {
     position: relative;
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 .material-icons:hover {

@@ -1,26 +1,28 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import *
-from .forms import *
-from .script.analyze_track import *
-from .script.rdf_generator import *
-from .script.final_test_compatto import *
-from django.core import serializers
-from django.http import JsonResponse
+import base64
+import shutil
 from datetime import timedelta
+
+from django.core import serializers
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.utils import timezone
 
-import base64
+from .forms import *
+from .models import *
+from .script.analyze_track import *
+from .script.final_test_compatto import *
+from .script.rdf_generator import *
 
 
 def index(request):
-    Track.objects.all().filter(pub_date__lt=timezone.now()-timedelta(minutes=30)).delete()
-
+    Track.objects.all().filter(pub_date__lt=timezone.now() - timedelta(minutes=15)).delete()
+    shutil.rmtree(".\emousic\static\\rdf\\")
+    os.mkdir(".\emousic\static\\rdf\\")
     if request.method == "POST":
         form = TrackForm(request.POST, request.FILES)
         if form.is_valid():
             instance = Track(file=request.FILES['file'], name=str(request.FILES['file']))
-            #print("views", type(instance.file))
             instance.save()
             midi_cordified, tot_measure = get_n_measures(instance.file)
             instance.tot_measure = tot_measure
@@ -37,7 +39,7 @@ def index(request):
             file = open(instance.file.path, 'rb')
             reader = file.read()
             base64_encoded = base64.b64encode(reader)
-            base64_encoded = "data:audio/midi;base64,"+str(base64_encoded, "utf-8")
+            base64_encoded = "data:audio/midi;base64," + str(base64_encoded, "utf-8")
             file.close()
 
             return render(request, 'index.html',
@@ -45,7 +47,6 @@ def index(request):
                            'measures': instance.tot_measure, 'measure_list': measure_list_json,
                            'track_name': instance.name, 'song': base64_encoded})
     else:
-        #print("nada")
         form = TrackForm()
     return render(request, 'index.html', {'form': form})
 
@@ -63,7 +64,7 @@ def rdf(request):
         rdf.rdf_init()
         if min == 1 and max == track.tot_measure:
             rdf.rdf(compact_tuple[0], compact_tuple[1], compact_tuple[2], compact_tuple[3], compact_tuple[4],
-                compact_tuple[5], compact_tuple[6])
+                    compact_tuple[5], compact_tuple[6])
         else:
             rdf.rdf(compact_tuple[0], compact_tuple[1], compact_tuple[2], compact_tuple[3], compact_tuple[4],
                     compact_tuple[5], compact_tuple[6], min, max)
@@ -75,7 +76,7 @@ def rdf(request):
     else:
         pass
     return render(request, 'rdf.html', {'min': min, 'max': max, 'rdf': rdf,
-                                        'xml': track.name.split(".mid")[0]+".xml"})
+                                        'xml': track.name.split(".mid")[0] + ".xml"})
 
 
 def get_moodtags(request):

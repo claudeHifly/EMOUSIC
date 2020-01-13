@@ -1,6 +1,6 @@
 $(function () {
     $("#measure_data").val(JSON.stringify(measure_data));
-    $("#checked_approach").val($( "input:checked" ).val());
+    $("#checked_approach").val($("input:checked").val());
 
     $("#slider-range").slider({
         range: true,
@@ -13,14 +13,13 @@ $(function () {
             $("#min_measure").val(ui.values[0]);
             $("#max_measure").val(ui.values[1]);
         },
-        create: function(event, ui) {
+        create: function (event, ui) {
             update_function();
         },
-        stop: function(event, ui) {
+        stop: function (event, ui) {
             update_function();
         }
     });
-
 
 
     // $("#amount").val($("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1));
@@ -29,14 +28,14 @@ $(function () {
     $("#max_measure").val($("#slider-range").slider("values", 1));
 });
 
-var update_function = function() {
+var update_function = function () {
     $.ajax({
         url: '/emousic/get_moodtags/',
         data: {
-          'track_id': $("#track_id").val(),
-          'min': $("#slider-range").slider("values", 0),
-          'max': $("#slider-range").slider("values", 1),
-          'approach': $("#checked_approach").val(),
+            'track_id': $("#track_id").val(),
+            'min': $("#slider-range").slider("values", 0),
+            'max': $("#slider-range").slider("values", 1),
+            'approach': $("#checked_approach").val(),
         },
         dataType: 'json',
         success: function (data) {
@@ -48,5 +47,5 @@ var update_function = function() {
             $("#table_moodtag_2").html(data.compact_tuple[5]);
             $("#table_polarity").html(data.compact_tuple[6]);
         }
-      });
+    });
 }

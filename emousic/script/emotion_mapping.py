@@ -1,5 +1,6 @@
 from .senticnote import senticnote
 
+
 def mapping(feature_map):
     occurences = {}
     for k in feature_map:
@@ -12,5 +13,3 @@ def mapping(feature_map):
                     occurences[e] = 1
 
     return occurences
-
-
